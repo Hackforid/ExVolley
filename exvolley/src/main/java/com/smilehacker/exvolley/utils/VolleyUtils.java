@@ -2,6 +2,7 @@ package com.smilehacker.exvolley.utils;
 
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 
 import java.io.UnsupportedEncodingException;
@@ -17,5 +18,33 @@ public class VolleyUtils {
         } catch (UnsupportedEncodingException e) {
             return null;
         }
+    }
+
+    /**
+     * read VolleyError in a simple way
+     * @param error
+     * @return
+     */
+    public static SimpleResponseError parseError(VolleyError error) {
+        NetworkResponse response = error.networkResponse;
+        SimpleResponseError simpleResponseError = new SimpleResponseError();
+
+        simpleResponseError.code = response.statusCode;
+        simpleResponseError.message = parseResponse(response);
+
+        return simpleResponseError;
+    }
+
+
+    public static class SimpleResponseError {
+        /**
+         * status code
+         */
+        public int code;
+
+        /**
+         * response data
+         */
+        public String message;
     }
 }
