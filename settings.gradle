@@ -1,1 +1,1 @@
-include ':exvolley', ':libs:volley', ':sample'
+include ':exvolley', ':exvolley:libs:volley', ':sample'
