@@ -1,3 +1,0 @@
-[submodule "exvolley/libs/volley"]
-	path = exvolley/libs/volley
-	url = https://android.googlesource.com/platform/frameworks/volley/
