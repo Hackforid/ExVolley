@@ -189,6 +189,8 @@ public class ExRequestBuilder {
             mRequest = new ExRequest<JSONObject>(mMethod, mUrl, mListener, mErrorListener, mResponseClass);
         } else if (mResponseClass.equals(JSONArray.class)) {
             mRequest = new ExRequest<JSONArray>(mMethod, mUrl, mListener, mErrorListener, mResponseClass);
+        } else {
+            mRequest = new ExRequest(mMethod, mUrl, mListener, mErrorListener, mResponseClass);
         }
 
         mRequest.setTag(mTag);

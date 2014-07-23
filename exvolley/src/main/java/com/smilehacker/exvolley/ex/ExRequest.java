@@ -7,6 +7,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +22,7 @@ import java.util.Map;
  */
 public class ExRequest<T> extends Request<T> {
 
+    private Gson mGson;
     private Class mResponseType;
     private String mContentType;
     private Map<String, String> mHeader;
@@ -49,6 +52,17 @@ public class ExRequest<T> extends Request<T> {
         }
 
         return null;
+    }
+
+    private Response<T> parseToGson(NetworkResponse response) {
+        try {
+            String json = new String(response.data, HttpHeaderParser.parseCharset(response.headers));
+            return (Response<T>) Response.success(mGson.fromJson(json, mResponseType), HttpHeaderParser.parseCacheHeaders(response));
+        } catch (UnsupportedEncodingException e) {
+            return Response.error(new ParseError(e));
+        } catch (JsonSyntaxException e) {
+            return Response.error(new ParseError(e));
+        }
     }
 
     private Response<String> parseToString(NetworkResponse response) {
